@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TileCell : MonoBehaviour
 {
-    public Vector2Int coordinates { get; set; }//Чш±к
+    public Vector2Int coordinates { get; set; }// еќђж ‡
     public Tile tile { get; set; }
-    public bool empty => tile == null;//їХ
-    public bool occupied => tile != null;//±»ХјУГ
+    public bool empty => tile == null;// з©є
+    public bool occupied => tile != null;// иў«еЌ з”Ё
 }

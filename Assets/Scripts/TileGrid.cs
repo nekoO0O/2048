@@ -1,46 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileGrid : MonoBehaviour
 {
-    public TileRow[] rows { get; private set; }//ĞĞÊı
-    public TileCell[] cells { get; private set; }//×Ü¹²¸ñ×ÓÊı
+    public TileRow[] rows { get; private set; } // è¡Œæ•°
+    public TileCell[] cells { get; private set; } // æ€»å…±æ ¼å­æ•°
 
-    public int size => cells.Length;//×Ü¹²¸ñ×ÓÊı
-    public int height => rows.Length;//¸ß¶Èy
-    public int width => size / height;//¿í¶Èx
+    public int size => cells.Length; // æ€»å…±æ ¼å­æ•°
+    public int height => rows.Length; // é«˜åº¦y
+    public int width => size / height; // å®½åº¦x
 
     private void Awake()
     {
-        //ÔÚTileGridÖĞ¹ÜÀíËùÓĞTileRowºÍTileCell
+        // åœ¨TileGridä¸­ç®¡ç†æ‰€æœ‰TileRowå’ŒTileCell
         rows = GetComponentsInChildren<TileRow>();
         cells = GetComponentsInChildren<TileCell>();
     }
 
     private void Start()
     {
-        /* ÎªÃ¿¸öcell¸³Óè×ø±ê
+        /* ä¸ºæ¯ä¸ªcellèµ‹äºˆåæ ‡
          * (0,0) (0,1) (0,2) (0,3)
          * (1,0) ...
          * (2,0) ...
          * (3,0) ...
-         */ 
-        //ÍâÑ­»·Îª±éÀúÃ¿Ò»ÁĞ
+         */
+        // å¤–å¾ªç¯ä¸ºéå†æ¯ä¸€åˆ—
         for (int y = 0; y < rows.Length; y++)
         {
-            //ÄÚÑ­»·ÎªÃ¿Ò»ĞĞµÄÃ¿¸öÔªËØ¸³Öµ×ø±ê
+            // å†…å¾ªç¯ä¸ºæ¯ä¸€è¡Œçš„æ¯ä¸ªå…ƒç´ èµ‹å€¼åæ ‡
             for (int x = 0; x < rows[y].cells.Length; x++)
             {
                 rows[y].cells[x].coordinates = new Vector2Int(x, y);
             }
         }
-    }//ÎªÃ¿¸öcell¸³Óè×ø±ê
+    } // ä¸ºæ¯ä¸ªcellèµ‹äºˆåæ ‡
 
     public TileCell GetCell(Vector2Int coordinates)
     {
         return GetCell(coordinates.x, coordinates.y);
-    }//µÃµ½xºÍy
+    } // å¾—åˆ°xå’Œy
 
     public TileCell GetCell(int x, int y)
     {
@@ -52,7 +50,7 @@ public class TileGrid : MonoBehaviour
         {
             return null;
         }
-    }//µÃµ½×ø±êxºÍy
+    } // å¾—åˆ°åæ ‡xå’Œy
 
     public TileCell GetAdjacentCell(TileCell cell, Vector2Int direction)
     {
@@ -61,7 +59,7 @@ public class TileGrid : MonoBehaviour
         coordinates.y -= direction.y;
 
         return GetCell(coordinates);
-    }//¸ù¾İ·½ÏòÕÒµ½ÏàÁÚµÄcell
+    } // æ ¹æ®æ–¹å‘æ‰¾åˆ°ç›¸é‚»çš„cell
 
     public TileCell GetRandomEmptyCell()
     {
@@ -77,7 +75,7 @@ public class TileGrid : MonoBehaviour
                 index = 0;
             }
 
-            // ËùÓĞcells¶¼±»Õ¼ÓÃ
+            // æ‰€æœ‰cellséƒ½è¢«å ç”¨
             if (index == startingIndex)
             {
                 return null;
@@ -85,5 +83,5 @@ public class TileGrid : MonoBehaviour
         }
 
         return cells[index];
-    }//ÕÒµ½Ò»¸ö¿ÕµÄcell
+    } // æ‰¾åˆ°ä¸€ä¸ªç©ºçš„cell
 }

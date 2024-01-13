@@ -8,51 +8,51 @@ public class TileBoard : MonoBehaviour
     public Tile tilePrefab;
     public TileState[] tileStates;
 
-    private TileGrid grid;
-    private List<Tile> tiles;
-    private bool waiting;//µÈ´ı¶¯»­½áÊø£¬±ÜÃâ·¢ÉúÆ¯ÒÆµÈÎÊÌâ
+    private TileGrid _grid;
+    private List<Tile> _tiles;
+    private bool _waiting; //ç­‰å¾…åŠ¨ç”»ç»“æŸï¼Œé¿å…å‘ç”Ÿæ¼‚ç§»ç­‰é—®é¢˜
 
     private void Awake()
     {
-        grid = GetComponentInChildren<TileGrid>();
-        tiles = new List<Tile>(16);
+        _grid = GetComponentInChildren<TileGrid>();
+        _tiles = new List<Tile>(16);
     }
 
     public void ClearBoard()
     {
-        foreach (var cell in grid.cells)
+        foreach (var cell in _grid.cells)
         {
             cell.tile = null;
         }
 
-        foreach (var tile in tiles)
+        foreach (var tile in _tiles)
         {
             Destroy(tile.gameObject);
         }
 
-        tiles.Clear();
+        _tiles.Clear();
     }
 
     /// <summary>
-    /// ´´½¨tile
+    /// åˆ›å»ºtile
     /// </summary>
     public void CreateTile()
     {
-        // Í¨¹ıtilePrefabÊµÀı»¯Ò»¸ötileÔÚgrid.transformµÄÎ»ÖÃ
-        Tile tile = Instantiate(tilePrefab, grid.transform);
-        // ´´½¨×ÊÔ´
+        // é€šè¿‡ tilePrefab å®ä¾‹åŒ–ä¸€ä¸ª tile åœ¨ grid.transform çš„ä½ç½®
+        Tile tile = Instantiate(tilePrefab, _grid.transform);
+        // åˆ›å»ºèµ„æº
         tile.SetState(tileStates[0]);
-        // ²úÉútileµ½Ëæ»ú¿ÕµÄµÄcellÉÏ
-        tile.Spawn(grid.GetRandomEmptyCell());
-        tiles.Add(tile);
+        // äº§ç”Ÿ tile åˆ°éšæœºç©ºçš„çš„ cell ä¸Š
+        tile.Spawn(_grid.GetRandomEmptyCell());
+        _tiles.Add(tile);
     }
 
     /// <summary>
-    /// ½ÓÊÜÓÃ»§ÊäÈë
+    /// æ¥å—ç”¨æˆ·è¾“å…¥
     /// </summary>
     private void Update()
     {
-        if (!waiting)
+        if (!_waiting)
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -64,17 +64,17 @@ public class TileBoard : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                Move(Vector2Int.down, 0, 1, grid.height - 2, -1);
+                Move(Vector2Int.down, 0, 1, _grid.height - 2, -1);
             }
             else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
-                Move(Vector2Int.right, grid.width - 2, -1, 0, 1);
+                Move(Vector2Int.right, _grid.width - 2, -1, 0, 1);
             }
         }
     }
 
     /// <summary>
-    /// ÒÆ¶¯
+    /// ç§»åŠ¨
     /// </summary>
     /// <param name="direction"></param>
     /// <param name="startX"></param>
@@ -87,14 +87,14 @@ public class TileBoard : MonoBehaviour
         /*
          2 0 0 2
          0 2 0 2
-         0 0 0 0 
+         0 0 0 0
          2 0 2 0
          */
-        for (int x = startX; x >= 0 && x < grid.width; x += incrementX)
+        for (int x = startX; x >= 0 && x < _grid.width; x += incrementX)
         {
-            for (int y = startY; y >= 0 && y < grid.height; y += incrementY)
+            for (int y = startY; y >= 0 && y < _grid.height; y += incrementY)
             {
-                TileCell cell = grid.GetCell(x, y);
+                TileCell cell = _grid.GetCell(x, y);
 
                 if (cell.occupied)
                 {
@@ -105,12 +105,12 @@ public class TileBoard : MonoBehaviour
 
         if (changed)
         {
-            StartCoroutine(WaitForChanges());//µÈ´ı¶¯»­Íê³É
+            StartCoroutine(WaitForChanges()); // ç­‰å¾…åŠ¨ç”»å®Œæˆ
         }
     }
 
     /// <summary>
-    /// ÒÆ¶¯ºÍºÏ²¢tile£¬·µ»Øbool£¬±íÊ¾ÊÇ·ñÒÆ¶¯
+    /// ç§»åŠ¨å’Œåˆå¹¶tileï¼Œè¿”å›boolï¼Œè¡¨ç¤ºæ˜¯å¦ç§»åŠ¨
     /// </summary>
     /// <param name="tile"></param>
     /// <param name="direction"></param>
@@ -118,13 +118,13 @@ public class TileBoard : MonoBehaviour
     private bool MoveTile(Tile tile, Vector2Int direction)
     {
         TileCell newCell = null;
-        TileCell adjacent = grid.GetAdjacentCell(tile.cell, direction);
+        TileCell adjacent = _grid.GetAdjacentCell(tile.cell, direction);
 
         while (adjacent != null)
         {
             if (adjacent.occupied)
             {
-                //ºÏ²¢
+                // åˆå¹¶
                 if (CanMerge(tile, adjacent.tile))
                 {
                     MergeTiles(tile, adjacent.tile);
@@ -135,7 +135,7 @@ public class TileBoard : MonoBehaviour
             }
 
             newCell = adjacent;
-            adjacent = grid.GetAdjacentCell(adjacent, direction);
+            adjacent = _grid.GetAdjacentCell(adjacent, direction);
         }
 
         if (newCell != null)
@@ -154,7 +154,7 @@ public class TileBoard : MonoBehaviour
 
     private void MergeTiles(Tile a, Tile b)
     {
-        tiles.Remove(a);
+        _tiles.Remove(a);
         a.Merge(b.cell);
 
         int index = Mathf.Clamp(IndexOf(b.state) + 1, 0, tileStates.Length - 1);
@@ -165,7 +165,7 @@ public class TileBoard : MonoBehaviour
     }
 
     /// <summary>
-    /// »ñÈ¡×ÊÔ´µÄË÷Òı£¬ÔÚ¸ü»»×ÊÔ´Ê±Ê¹ÓÃ
+    /// è·å–èµ„æºçš„ç´¢å¼•ï¼Œåœ¨æ›´æ¢èµ„æºæ—¶ä½¿ç”¨
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>
@@ -184,18 +184,18 @@ public class TileBoard : MonoBehaviour
 
     private IEnumerator WaitForChanges()
     {
-        waiting = true;
+        _waiting = true;
 
         yield return new WaitForSeconds(0.1f);
 
-        waiting = false;
+        _waiting = false;
 
-        foreach (var tile in tiles)
+        foreach (var tile in _tiles)
         {
             tile.locked = false;
         }
 
-        if (tiles.Count != grid.size)
+        if (_tiles.Count != _grid.size)
         {
             CreateTile();
         }
@@ -208,17 +208,17 @@ public class TileBoard : MonoBehaviour
 
     public bool CheckForGameOver()
     {
-        if (tiles.Count != grid.size)
+        if (_tiles.Count != _grid.size)
         {
             return false;
         }
 
-        foreach (var tile in tiles)
+        foreach (var tile in _tiles)
         {
-            TileCell up = grid.GetAdjacentCell(tile.cell, Vector2Int.up);
-            TileCell down = grid.GetAdjacentCell(tile.cell, Vector2Int.down);
-            TileCell left = grid.GetAdjacentCell(tile.cell, Vector2Int.left);
-            TileCell right = grid.GetAdjacentCell(tile.cell, Vector2Int.right);
+            TileCell up = _grid.GetAdjacentCell(tile.cell, Vector2Int.up);
+            TileCell down = _grid.GetAdjacentCell(tile.cell, Vector2Int.down);
+            TileCell left = _grid.GetAdjacentCell(tile.cell, Vector2Int.left);
+            TileCell right = _grid.GetAdjacentCell(tile.cell, Vector2Int.right);
 
             if (up != null && CanMerge(tile, up.tile))
             {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileRow : MonoBehaviour
@@ -8,7 +6,7 @@ public class TileRow : MonoBehaviour
 
     private void Awake()
     {
-        //ÔÚTileRowÖĞ¹ÜÀíËùÓĞTileCell
+        // åœ¨ TileRow ä¸­ç®¡ç†æ‰€æœ‰ TileCell
         cells = GetComponentsInChildren<TileCell>();
     }
 }

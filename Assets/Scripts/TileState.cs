@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-//´´½¨×Ô¶¨Òå×ÊÔ´²Ëµ¥µÄÊôĞÔ±êÇ©
+// åˆ›å»ºè‡ªå®šä¹‰èµ„æºèœå•çš„å±æ€§æ ‡ç­¾
 [CreateAssetMenu(menuName = "Tile State")]
 public class TileState : ScriptableObject
 {

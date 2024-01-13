@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -8,9 +7,9 @@ public class GameManager : MonoBehaviour
     public TileBoard board;
     public CanvasGroup gameOver;
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI hiscoreText;
+    public TextMeshProUGUI hisScoreText;
 
-    private int score;
+    private int _score;
 
     private void Start()
     {
@@ -21,7 +20,7 @@ public class GameManager : MonoBehaviour
     {
         // reset score
         SetScore(0);
-        hiscoreText.text = LoadHiscore().ToString();
+        hisScoreText.text = LoadHisScore().ToString();
 
         // hide game over screen
         gameOver.alpha = 0f;
@@ -44,29 +43,29 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseScore(int points)
     {
-        SetScore(score + points);
+        SetScore(_score + points);
     }
 
     private void SetScore(int score)
     {
-        this.score = score;
+        this._score = score;
         scoreText.text = score.ToString();
 
-        SaveHiscore();
+        SaveHisScore();
     }
 
-    private void SaveHiscore()
+    private void SaveHisScore()
     {
-        int hiscore = LoadHiscore();
+        int hisScore = LoadHisScore();
 
-        if (score > hiscore)
+        if (_score > hisScore)
         {
-            PlayerPrefs.SetInt("hiscore", score);
+            PlayerPrefs.SetInt("hisScore", _score);
         }
     }
 
-    private int LoadHiscore()
+    private int LoadHisScore()
     {
-        return PlayerPrefs.GetInt("hiscore", 0);
+        return PlayerPrefs.GetInt("hisScore", 0);
     }
 }

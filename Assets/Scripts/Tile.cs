@@ -5,36 +5,36 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    public TileState state { get; private set; }//»ñÈ¡×ÊÔ´
+    public TileState state { get; private set; } // è·å–èµ„æº
     public TileCell cell { get; private set; }
     public bool locked { get; set; }
 
-    private Image background;
-    private TextMeshProUGUI text;
+    private Image _background;
+    private TextMeshProUGUI _text;
 
     private void Awake()
     {
-        background = GetComponent<Image>();
-        text = GetComponentInChildren<TextMeshProUGUI>();
+        _background = GetComponent<Image>();
+        _text = GetComponentInChildren<TextMeshProUGUI>();
 
         DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
     }
 
     /// <summary>
-    /// ½«×ÊÔ´ÉèÖÃµ½TileÉÏ
+    /// å°†èµ„æºè®¾ç½®åˆ°Tileä¸Š
     /// </summary>
     /// <param name="state"></param>
     public void SetState(TileState state)
     {
         this.state = state;
 
-        background.color = state.backgroundColor;
-        text.color = state.textColor;
-        text.text = state.number.ToString();
+        _background.color = state.backgroundColor;
+        _text.color = state.textColor;
+        _text.text = state.number.ToString();
     }
 
     /// <summary>
-    /// ²úÉútileµ½Ö¸¶¨µÄcellÉÏ
+    /// äº§ç”Ÿtileåˆ°æŒ‡å®šçš„cellä¸Š
     /// </summary>
     /// <param name="cell"></param>
     public void Spawn(TileCell cell)
@@ -49,13 +49,13 @@ public class Tile : MonoBehaviour
 
         transform.position = cell.transform.position;
 
-        // Ê¹ÓÃDOTween²úÉú¶¯»­
+        // ä½¿ç”¨DOTweenäº§ç”ŸåŠ¨ç”»
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 0.2f);
     }
 
     /// <summary>
-    /// ÒÆ¶¯
+    /// ç§»åŠ¨
     /// </summary>
     /// <param name="cell"></param>
     public void MoveTo(TileCell cell)
@@ -72,7 +72,7 @@ public class Tile : MonoBehaviour
     }
 
     /// <summary>
-    /// ºÏ²¢
+    /// åˆå¹¶
     /// </summary>
     /// <param name="cell"></param>
     public void Merge(TileCell cell)
@@ -88,7 +88,7 @@ public class Tile : MonoBehaviour
         transform.DOMove(cell.transform.position, 0.1f)
             .OnComplete(() =>
             {
-                Destroy(gameObject);// Ïú»Ùµ±Ç°ÎïÌå
+                Destroy(gameObject); // é”€æ¯å½“å‰ç‰©ä½“
             });
     }
 }
