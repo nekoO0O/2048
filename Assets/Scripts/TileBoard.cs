@@ -54,19 +54,19 @@ public class TileBoard : MonoBehaviour
     {
         if (!_waiting)
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (InputManager.Instance.inputControls.Game.Up.WasPressedThisFrame())
             {
                 Move(Vector2Int.up, 0, 1, 1, 1);
             }
-            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                Move(Vector2Int.left, 1, 1, 0, 1);
-            }
-            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            else if (InputManager.Instance.inputControls.Game.Down.WasPressedThisFrame())
             {
                 Move(Vector2Int.down, 0, 1, _grid.height - 2, -1);
             }
-            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            else if (InputManager.Instance.inputControls.Game.Left.WasPressedThisFrame()) 
+            {
+                Move(Vector2Int.left, 1, 1, 0, 1);
+            }
+            else if (InputManager.Instance.inputControls.Game.Right.WasPressedThisFrame())
             {
                 Move(Vector2Int.right, _grid.width - 2, -1, 0, 1);
             }

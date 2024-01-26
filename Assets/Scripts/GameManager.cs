@@ -11,9 +11,25 @@ public class GameManager : MonoBehaviour
 
     private int _score;
 
+    private void Awake()
+    {
+        InputManager inputManager = new InputManager();
+        inputManager.Init();
+    }
+
+    private void OnEnable()
+    {
+        InputManager.Instance.Enable();
+    }
+
     private void Start()
     {
         NewGame();
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.Disable();
     }
 
     public void NewGame()
