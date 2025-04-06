@@ -1,16 +1,15 @@
 public class InputManager
 {
-    public static InputManager Instance;
+    public static InputManager Instance { get; } = new InputManager(); 
 
     public GameInputControls inputControls;
 
-    public void Init()
+    private InputManager()
     {
-        Instance = this;
         inputControls = new GameInputControls();
     }
 
-    public void Enable()
+    public void Init()
     {
         inputControls.Enable();
     }

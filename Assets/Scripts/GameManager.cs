@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -13,13 +14,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        InputManager inputManager = new InputManager();
-        inputManager.Init();
-    }
-
-    private void OnEnable()
-    {
-        InputManager.Instance.Enable();
+        InputManager.Instance.Init();
     }
 
     private void Start()
@@ -44,8 +39,7 @@ public class GameManager : MonoBehaviour
 
         // update board state
         board.ClearBoard();
-        board.CreateTile();
-        board.CreateTile();
+        board.CreateTile(2);
         board.enabled = true;
     }
 

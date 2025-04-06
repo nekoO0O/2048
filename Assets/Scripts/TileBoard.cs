@@ -36,15 +36,20 @@ public class TileBoard : MonoBehaviour
     /// <summary>
     /// 创建tile
     /// </summary>
-    public void CreateTile()
+    public void CreateTile(int num)
     {
-        // 通过 tilePrefab 实例化一个 tile 在 grid.transform 的位置
-        Tile tile = Instantiate(tilePrefab, _grid.transform);
-        // 创建资源
-        tile.SetState(tileStates[0]);
-        // 产生 tile 到随机空的的 cell 上
-        tile.Spawn(_grid.GetRandomEmptyCell());
-        _tiles.Add(tile);
+        for (int i = 0; i < num; i++)
+        {
+            // 通过 tilePrefab 实例化一个 tile 在 grid.transform 的位置
+            Tile tile = GameObject.Instantiate(tilePrefab, _grid.transform);
+
+            // 创建资源
+            tile.SetState(tileStates[0]);
+
+            // 产生 tile 到随机空的的 cell 上
+            tile.Spawn(_grid.GetRandomEmptyCell());
+            _tiles.Add(tile);
+        }
     }
 
     /// <summary>
@@ -197,7 +202,7 @@ public class TileBoard : MonoBehaviour
 
         if (_tiles.Count != _grid.size)
         {
-            CreateTile();
+            CreateTile(1);
         }
 
         if (CheckForGameOver())
