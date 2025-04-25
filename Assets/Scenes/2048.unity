@@ -2777,7 +2777,7 @@ MonoBehaviour:
   board: {fileID: 683045293}
   gameOver: {fileID: 6947016744624563482}
   scoreText: {fileID: 1719002675}
-  hisScoreText: {fileID: 920158208}
+  highScoreText: {fileID: 920158208}
 --- !u!4 &1437447610
 Transform:
   m_ObjectHideFlags: 0
@@ -3847,7 +3847,7 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 519420032}
-  - {fileID: 1978068666}
   - {fileID: 164766812}
+  - {fileID: 519420032}
   - {fileID: 1437447610}
+  - {fileID: 1978068666}
